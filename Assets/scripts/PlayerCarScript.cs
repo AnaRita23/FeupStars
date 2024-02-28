@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCarScript : MonoBehaviour
 {
     public Rigidbody2D myRigidBody;
+    public Transform backgroundTransform;
     public float accelerationForce = 10f;
     public float brakeForce = 500f;
     public float rotationSpeed = 100f; 
@@ -37,6 +38,13 @@ public class PlayerCarScript : MonoBehaviour
         else if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(-Vector3.forward * rotationSpeed * Time.deltaTime);
+        }
+
+        if (backgroundTransform != null)
+        {
+            Vector3 backgroundPosition = backgroundTransform.position;
+            backgroundPosition.x = transform.position.x;
+            backgroundTransform.position = backgroundPosition;
         }
     }
 }
