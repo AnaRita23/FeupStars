@@ -1,50 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCarScript : MonoBehaviour
+public class CarController : MonoBehaviour
 {
-    public Rigidbody2D myRigidBody;
-    public Transform backgroundTransform;
-    public float accelerationForce = 10f;
-    public float brakeForce = 500f;
-    public float rotationSpeed = 100f; 
+    public float moveSpeed = 5f;
+    public float rotationSpeed = 100f;
 
-    // Start is called before the first frame update
-    void Start()
+    private Rigidbody2D rigidBody;
+
+    private void Start()
     {
-
+        rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            Vector2 forwardDirection = new Vector2(Mathf.Cos(transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(transform.eulerAngles.z * Mathf.Deg2Rad));
-            myRigidBody.AddForce(transform.right * accelerationForce, ForceMode2D.Force);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            
-            myRigidBody.AddForce(-myRigidBody.velocity.normalized * brakeForce * Time.deltaTime, ForceMode2D.Force);
-        }
+        // input teclas W, S, A e D
+        float moveInput = Input.GetAxis("Vertical");
+        float rotationInput = Input.GetAxis("Horizontal");
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
-        }
-        
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(-Vector3.forward * rotationSpeed * Time.deltaTime);
-        }
+        // movimento
+        rigidBody.velocity = transform.right * moveInput * moveSpeed;
 
-        if (backgroundTransform != null)
-        {
-            Vector3 backgroundPosition = backgroundTransform.position;
-            backgroundPosition.x = transform.position.x;
-            backgroundTransform.position = backgroundPosition;
-        }
+        // rotação
+        float rotationAmount = -rotationInput * rotationSpeed * Time.fixedDeltaTime; // inverte direção rotação
+        rigidBody.MoveRotation(rigidBody.rotation + rotationAmount);
     }
 }
