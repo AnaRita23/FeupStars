@@ -1905,10 +1905,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f99e6217e5ac5a4681ab0b9e863d1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 1723359581}
-  playerGoal: {fileID: 1483562215}
-  movementSpeed: 5
-  shootDistance: 5
+  driftFactor: 0.95
+  accelerationFactor: 30
+  turnFactor: 3.5
+  maxSpeed: 20
 --- !u!1 &867184046
 GameObject:
   m_ObjectHideFlags: 0
@@ -2914,7 +2914,7 @@ GameObject:
   - component: {fileID: 1723359582}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3248,7 +3248,7 @@ GameObject:
   - component: {fileID: 1931709431}
   m_Layer: 0
   m_Name: PlayerCar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
