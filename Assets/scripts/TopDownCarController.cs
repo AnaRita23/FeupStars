@@ -21,10 +21,6 @@ public class TopDownCarController : MonoBehaviour
     {
         carRigidbody2D = GetComponent<Rigidbody2D>();
     }
-    private void Start()
-    {
-        
-    }
 
     private void FixedUpdate()
     {

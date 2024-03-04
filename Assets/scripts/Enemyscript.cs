@@ -4,18 +4,28 @@ using UnityEngine;
 
 public class Enemyscript : MonoBehaviour
 {
-    public Rigidbody2D myRigidBody;
-    public float speed = 5f; // Speed of the car
+    public Transform ball;
+    public Transform playerGoal;
 
-    // Start is called before the first frame update
+    public float movementSpeed = 5f;
+    public float shootDistance = 5f;
+
+    private Rigidbody2D rb;
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Calculate direction to the ball
+        Vector2 directionToBall = ball.position - transform.position;
+
+        // Move towards the ball
+        rb.velocity = directionToBall.normalized * movementSpeed;
 
     }
+
 }
+
