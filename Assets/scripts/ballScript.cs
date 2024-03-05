@@ -25,6 +25,14 @@ public class ballScript : MonoBehaviour
         if (!isResetting && (myRigidBody.position.x < -17.8 || myRigidBody.position.x > 17.8))
         {
             StartCoroutine(ResetPositionsAfterDelay(2f));
+            if (myRigidBody.position.x < -17.8)
+            {
+                logic.addEnemyScore();
+            }
+            if (myRigidBody.position.x > 17.8)
+            {
+                logic.addPlayerScore();
+            }
             StartCoroutine(BlinkBackground(2f, 0.2f)); // Start blinking background
         }
     }
@@ -34,7 +42,7 @@ public class ballScript : MonoBehaviour
         isResetting = true;
         yield return new WaitForSeconds(delay);
 
-        logic.addScore();
+    
 
         myRigidBody.position = Vector2.zero;
         myRigidBody.velocity = Vector2.zero;
