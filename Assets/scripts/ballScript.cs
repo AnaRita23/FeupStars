@@ -15,6 +15,7 @@ public class ballScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myRigidBody.position = new Vector2(0,Random.Range(-3f,3f));
         mainCamera = Camera.main; // Get the reference to the main camera
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
     }
@@ -22,18 +23,18 @@ public class ballScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isResetting && (myRigidBody.position.x < -17.8 || myRigidBody.position.x > 17.8))
+        if (!isResetting && (myRigidBody.position.x < -11.5 || myRigidBody.position.x > 11.5))
         {
             StartCoroutine(ResetPositionsAfterDelay(2f));
-            if (myRigidBody.position.x < -17.8)
+            StartCoroutine(BlinkBackground(2f, 0.2f)); // Start blinking background
+            if (myRigidBody.position.x < -11.5)
             {
                 logic.addEnemyScore();
             }
-            if (myRigidBody.position.x > 17.8)
+            if (myRigidBody.position.x > 11.5)
             {
                 logic.addPlayerScore();
             }
-            StartCoroutine(BlinkBackground(2f, 0.2f)); // Start blinking background
         }
     }
 
@@ -44,7 +45,7 @@ public class ballScript : MonoBehaviour
 
     
 
-        myRigidBody.position = Vector2.zero;
+        myRigidBody.position = new Vector2(0,Random.Range(-3f,3f));
         myRigidBody.velocity = Vector2.zero;
         myRigidBody.MoveRotation(0);
 
