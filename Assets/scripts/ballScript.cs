@@ -7,6 +7,7 @@ public class ballScript : MonoBehaviour
     public Rigidbody2D myRigidBody;
     public Rigidbody2D car1;
     public Rigidbody2D car2;
+    public LogicScript logic;
     private bool isResetting = false;
     public Color blinkColor; // Color to blink the background
     private Camera mainCamera; // Reference to the main camera
@@ -15,6 +16,7 @@ public class ballScript : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main; // Get the reference to the main camera
+        logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
     }
 
     // Update is called once per frame
@@ -31,6 +33,8 @@ public class ballScript : MonoBehaviour
     {
         isResetting = true;
         yield return new WaitForSeconds(delay);
+
+        logic.addScore();
 
         myRigidBody.position = Vector2.zero;
         myRigidBody.velocity = Vector2.zero;
