@@ -9,12 +9,8 @@ public class PortalManager : MonoBehaviour
     public Vector2 spawnRangeY = new Vector2(-5f, 5f);
     public float delay = 2f;
 
-    private bool canSpawnPortals = true;
-    private GameObject[] portals;
-
     private void Start()
     {
-        portals = new GameObject[2]; // Inicializa o array para armazenar os portais
         // Start coroutine to activate portals after delay
         StartCoroutine(ActivatePortals());
     }
@@ -24,46 +20,21 @@ public class PortalManager : MonoBehaviour
         // Wait for delay before activating portals
         yield return new WaitForSeconds(delay);
 
-        while(true)
+
+        Vector2 portal1Position = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
+        Vector2 portal2Position = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
+
+        
+        while (Vector2.Distance(portal1Position, portal2Position) < 4f)
         {
-            if (canSpawnPortals && portals[0] == null && portals[1] == null)
-            {
-                Vector2 portal1Position = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
-                Vector2 portal2Position = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
-
-
-                while (Vector2.Distance(portal1Position, portal2Position) < 4f)
-                {
-                    portal2Position = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
-
-                }
-
-                // Instantiate portals
-                portals[0] = Instantiate(portalPrefab, portal1Position, Quaternion.identity);
-                portals[1] = Instantiate(portalPrefab, portal2Position, Quaternion.identity);
-
-                // Add colliders to the portals
-                portals[0].AddComponent<BoxCollider2D>();
-                portals[1].AddComponent<BoxCollider2D>();
-
-                // to prevent immediate respawning
-                canSpawnPortals = false;
-
-                StartCoroutine(ResetPortalSpawn());
-
-            }
-
-            // Delay before checking if portals can be spawned again
-            yield return new WaitForSeconds(0.5f);
+            portal2Position = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
+            
         }
-    }
 
-    IEnumerator ResetPortalSpawn()
-    {
-        // Wait for 10 seconds before allowing portals to be spawned again
-        yield return new WaitForSeconds(30f);
+        // Instantiate portals
+        GameObject portal1 = Instantiate(portalPrefab, portal1Position, Quaternion.identity);
+        GameObject portal2 = Instantiate(portalPrefab, portal2Position, Quaternion.identity);
 
-        // Set canSpawnPortals back to true to allow portal spawning
-        canSpawnPortals = true;
     }
 }
+
