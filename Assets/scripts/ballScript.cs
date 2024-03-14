@@ -44,18 +44,17 @@ public class ballScript : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
     
-
         myRigidBody.position = new Vector2(0,Random.Range(-3f,3f));
         myRigidBody.velocity = Vector2.zero;
         myRigidBody.MoveRotation(0);
 
         car1.position = new Vector2(-10, 0);
         car1.velocity = Vector2.zero;
-        car1.MoveRotation(0);
+        car1.rotation = 0;
 
         car2.position = new Vector2(10, 0);
         car2.velocity = Vector2.zero;
-        car2.MoveRotation(0);
+        car2.rotation = 0;
 
         isResetting = false;
     }
