@@ -6,6 +6,13 @@ public class CarInputHandler : MonoBehaviour
 {
     TopDownCarController topDownCarController;
     Vector3 originalSize;
+    public enum ControlType
+    {
+        WASD,
+        ArrowKeys
+    }
+
+    public ControlType controlType;
 
     void Awake()
     {
@@ -21,9 +28,17 @@ public class CarInputHandler : MonoBehaviour
     void Update()
     {
         Vector2 inputVector = Vector2.zero;
-
-        inputVector.x = Input.GetAxis("Horizontal");
-        inputVector.y = Input.GetAxis("Vertical");
+        switch (controlType)
+        {
+            case ControlType.WASD:
+                inputVector.x = Input.GetKey(KeyCode.D) ? 1 : (Input.GetKey(KeyCode.A) ? -1 : 0);
+                inputVector.y = Input.GetKey(KeyCode.W) ? 1 : (Input.GetKey(KeyCode.S) ? -1 : 0);
+                break;
+            case ControlType.ArrowKeys:
+                inputVector.x = Input.GetKey("right") ? 1 : (Input.GetKey("left") ? -1 : 0);
+                inputVector.y = Input.GetKey("down") ? 1 : (Input.GetKey("up") ? -1 : 0);
+                break;
+        }
 
         topDownCarController.SetInputVector(inputVector);
     }

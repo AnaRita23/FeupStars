@@ -5,9 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public void PlayerVsComputer()
+    {
+        SceneManager.LoadScene("Player Vs Computer");
+    }
+
     public void PlayerVsPlayer()
     {
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadScene("Player Vs Player");
     }
 
     public void QuitGame()
