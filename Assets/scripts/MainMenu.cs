@@ -7,12 +7,12 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayerVsComputer()
     {
-        SceneManager.LoadScene("Player Vs Computer");
+        SceneManager.LoadScene(0);
     }
 
     public void PlayerVsPlayer()
     {
-        SceneManager.LoadScene("Player Vs Player");
+        SceneManager.LoadScene(2);
     }
 
     public void QuitGame()
