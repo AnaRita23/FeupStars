@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ballScript : MonoBehaviour
 {
+    public TopDownCarController car1;
+    public TopDownCarController car2;
     public Rigidbody2D myRigidBody;
-    public Rigidbody2D car1;
-    public Rigidbody2D car2;
     public LogicScript logic;
     private bool isResetting = false;
     public Color blinkColor; // Color to blink the background
@@ -44,17 +44,13 @@ public class ballScript : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
     
-        myRigidBody.position = new Vector2(0,Random.Range(-3f,3f));
+        myRigidBody.position = new Vector2(0,Random.Range(-0.3f,0.3f));
         myRigidBody.velocity = Vector2.zero;
-        myRigidBody.MoveRotation(0);
+        myRigidBody.rotation = 0;
 
-        car1.position = new Vector2(-10, 0);
-        car1.velocity = Vector2.zero;
-        car1.rotation = 0;
+        car1.Reset();
 
-        car2.position = new Vector2(10, 0);
-        car2.velocity = Vector2.zero;
-        car2.rotation = 0;
+        car2.Reset();
 
         isResetting = false;
     }

@@ -11,7 +11,7 @@ public class TopDownCarController : MonoBehaviour
     float accelerationInput = 0;
     float steeringInput = 0;
 
-    float rotationAngle = 0;
+    public float rotationAngle = 0;
 
     float velocityVsUp = 0;
 
@@ -83,5 +83,21 @@ public class TopDownCarController : MonoBehaviour
     {
         accelerationInput = inputVector.y;
         steeringInput = inputVector.x;
+    }
+
+    public void Reset()
+    {
+        rotationAngle = 0f;
+        carRigidbody2D.velocity = Vector2.zero;
+        switch (gameObject.tag)
+        {
+            case "Player":
+                transform.position = new Vector2(-8, 0);
+                break;
+            case "Enemy":
+                transform.position = new Vector2(8, 0);
+                break;
+        }
+
     }
 }
