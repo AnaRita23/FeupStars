@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
@@ -15,6 +17,12 @@ public class EnemyScript : MonoBehaviour
     private Rigidbody2D carRigidbody2D;
     private Transform playerCar;
     private Transform ball;
+
+    Vector3 originalSize;
+    public bool collisionTrigger = false;
+
+    public LogicScript logic;
+    public EnemyScript enemyCar;
 
     void Awake()
     {
@@ -72,5 +80,48 @@ public class EnemyScript : MonoBehaviour
         Vector2 rightVelocity = transform.up * Vector2.Dot(carRigidbody2D.velocity, transform.up);
 
         carRigidbody2D.velocity = rightVelocity + forwardVelocity * driftFactor;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        collisionTrigger = true;
+        GameObject collider = other.gameObject;
+        if (collider != null)
+        {
+            Destroy(collider);
+        }
+
+
+        if (collider.name == "growthPotion(Clone)")
+        {
+            StartCoroutine(GrowthAndBack());
+        }
+
+        else if (collider.name == "loosePoint(Clone)")
+        {
+            logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
+            enemyCar = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyScript>();
+
+            logic.loosePlayerPoint();
+        }
+        else if (collider.name == "doublePoint(Clone)")
+        {
+            logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
+            enemyCar = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyScript>();
+
+            logic.addPowerUpEnemyScore();
+        }
+
+    }
+
+    IEnumerator GrowthAndBack()
+    {
+        if (transform.localScale == originalSize)
+        {
+            transform.localScale *= 1.75f;
+        }
+        yield return new WaitForSeconds(10);
+        transform.localScale = originalSize;
+
     }
 }

@@ -12,6 +12,9 @@ public class ballScript : MonoBehaviour
     public Color blinkColor; // Color to blink the background
     private Camera mainCamera; // Reference to the main camera
 
+    public CarInputHandler playerCar;
+    public EnemyScript enemyCar;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,18 +26,35 @@ public class ballScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        playerCar = GameObject.FindGameObjectWithTag("Player").GetComponent<CarInputHandler>();
+        enemyCar = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyScript>();
         if (!isResetting && (myRigidBody.position.x < -11.5 || myRigidBody.position.x > 11.5))
         {
             StartCoroutine(ResetPositionsAfterDelay(2f));
             StartCoroutine(BlinkBackground(2f, 0.2f)); // Start blinking background
             if (myRigidBody.position.x < -11.5)
             {
-                logic.addEnemyScore();
+                if (enemyCar.collisionTrigger)
+                {
+                    logic.addPowerUpEnemyScore();
+                }
+                else
+                {
+                    logic.addEnemyScore();
+                }
             }
             if (myRigidBody.position.x > 11.5)
             {
-                logic.addPlayerScore();
+                if (playerCar.collisionTrigger)
+                {
+                    logic.addPowerUpPlayerScore();
+                }
+                else
+                {
+                    logic.addPlayerScore();
+                }
             }
+
         }
     }
 

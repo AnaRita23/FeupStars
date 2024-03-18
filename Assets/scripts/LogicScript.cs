@@ -23,4 +23,35 @@ public class LogicScript : MonoBehaviour
         enemyScore += 1;
         scoreText.text = playerScore.ToString() + " - " + enemyScore.ToString();
     }
+
+    public void addPowerUpPlayerScore()
+    {
+        playerScore += 2;
+        scoreText.text = playerScore.ToString() + " - " + enemyScore.ToString();
+    }
+
+    [ContextMenu("Increase E Score")]
+    public void addPowerUpEnemyScore()
+    {
+        enemyScore += 2;
+        scoreText.text = playerScore.ToString() + " - " + enemyScore.ToString();
+    }
+
+    public void loosePlayerPoint()
+    {
+        if (playerScore > 0)
+        {
+            playerScore -= 1;
+        }
+        scoreText.text = playerScore.ToString() + " - " + enemyScore.ToString();
+    }
+
+    public void looseEnemyPoint()
+    {
+        if (enemyScore > 0)
+        {
+            enemyScore -= 1;
+        }
+        scoreText.text = playerScore.ToString() + " - " + enemyScore.ToString();
+    }
 }

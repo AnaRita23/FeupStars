@@ -6,6 +6,10 @@ public class CarInputHandler : MonoBehaviour
 {
     TopDownCarController topDownCarController;
     Vector3 originalSize;
+    public bool collisionTrigger = false;
+
+    public LogicScript logic;
+    public CarInputHandler playerCar;
     public enum ControlType
     {
         WASD,
@@ -45,12 +49,32 @@ public class CarInputHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        GameObject growthPotion = other.gameObject;
-        if (growthPotion != null)
+        collisionTrigger = true;
+        GameObject collider = other.gameObject;
+        if (collider != null)
         {
-            Destroy(growthPotion);
+            Destroy(collider);
         }
-        StartCoroutine(GrowthAndBack());
+
+        if (collider.name == "growthPotion(Clone)")
+        {
+            StartCoroutine(GrowthAndBack());
+        }
+
+        else if (collider.name == "loosePoint(Clone)")
+        {
+            logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
+            playerCar = GameObject.FindGameObjectWithTag("Player").GetComponent<CarInputHandler>();
+
+            logic.loosePlayerPoint();
+        }
+        else if (collider.name == "doublePoint(Clone)")
+        {
+            logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
+            playerCar = GameObject.FindGameObjectWithTag("Player").GetComponent<CarInputHandler>();
+
+            logic.addPowerUpPlayerScore();
+        }
 
     }
 
@@ -62,6 +86,5 @@ public class CarInputHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(10);
         transform.localScale = originalSize;
-
     }
 }
