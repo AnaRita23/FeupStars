@@ -46,6 +46,10 @@ public class PortalManager : MonoBehaviour
                 portals[0].AddComponent<BoxCollider2D>();
                 portals[1].AddComponent<BoxCollider2D>();
 
+                // Set layer collision to ignore collisions between ball and power-ups
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ball"), LayerMask.NameToLayer("PowerUps"));
+
+
                 // to prevent immediate respawning
                 canSpawnPortals = false;
 
@@ -66,4 +70,5 @@ public class PortalManager : MonoBehaviour
         // Set canSpawnPortals back to true to allow portal spawning
         canSpawnPortals = true;
     }
+
 }

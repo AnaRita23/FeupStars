@@ -71,4 +71,11 @@ public class ballScript : MonoBehaviour
             timer += interval * 2; // increment timer by the time for both intervals
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        /* Debug.Log("Collision detected with " + other.gameObject.name);
+        // ignore collision
+        Physics2D.IgnoreCollision(other, GetComponent<Collider2D>(), true);*/
+    }
 }

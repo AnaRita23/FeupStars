@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9065de4b8ed0b5419d05d3c83a45207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 2
+  bounceForce: 1.5
 --- !u!1 &285519681
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,7 +2127,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 3a0d508cf92016441b383070d05a16d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2309,6 +2309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 624108872}
+  elapsedTime: 60
 --- !u!114 &624108872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3645,7 +3646,7 @@ GameObject:
   - component: {fileID: 1157781542}
   - component: {fileID: 1157781541}
   - component: {fileID: 1157781543}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3803,7 +3804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9065de4b8ed0b5419d05d3c83a45207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 2
+  bounceForce: 1.5
 --- !u!1 &1229404842
 GameObject:
   m_ObjectHideFlags: 0
@@ -4275,7 +4276,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: d19137691a77ea144bd5dbf68d22cb4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4433,7 +4434,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 24502412ae736c84ebe9f5b6fc5cd3ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

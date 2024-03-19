@@ -49,6 +49,9 @@ public class LoosePointManager : MonoBehaviour
                 portals[0].AddComponent<BoxCollider2D>();
                 portals[1].AddComponent<BoxCollider2D>();
 
+                // Set layer collision to ignore collisions between ball and power-ups
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ball"), LayerMask.NameToLayer("PowerUps"));
+
                 StartCoroutine(ResetPortalSpawn());
 
             }
