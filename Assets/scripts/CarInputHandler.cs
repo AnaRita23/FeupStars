@@ -64,16 +64,26 @@ public class CarInputHandler : MonoBehaviour
         else if (collider.name == "loosePoint(Clone)")
         {
             logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
-            playerCar = GameObject.FindGameObjectWithTag("Player").GetComponent<CarInputHandler>();
-
-            logic.loosePlayerPoint();
+            if(gameObject.tag == "Player")
+            {
+                logic.loosePlayerPoint();
+            }
+            else if(gameObject.tag == "Enemy")
+            {
+                logic.looseEnemyPoint();
+            }
         }
         else if (collider.name == "doublePoint(Clone)")
         {
             logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
-            playerCar = GameObject.FindGameObjectWithTag("Player").GetComponent<CarInputHandler>();
-
-            logic.addPowerUpPlayerScore();
+            if(gameObject.tag == "Player")
+            {
+                logic.addPowerUpPlayerScore();
+            }
+            else if(gameObject.tag == "Enemy")
+            {
+                logic.addPowerUpEnemyScore();
+            }
         }
 
     }
