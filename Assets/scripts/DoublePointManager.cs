@@ -5,6 +5,8 @@ using UnityEngine;
 public class DoublePointManager : MonoBehaviour
 {
     public GameObject doubleGoalPrefab;
+    public GameObject enemy;
+    public GameObject player;
     public Vector2 spawnRangeX = new Vector2(-10f, 10f);
     public Vector2 spawnRangeY = new Vector2(-5f, 5f);
     public float delay = 2f;
@@ -19,47 +21,48 @@ public class DoublePointManager : MonoBehaviour
         StartCoroutine(ActivatePortals());
     }
 
-    IEnumerator ActivatePortals()
+IEnumerator ActivatePortals()
+{
+    // Wait for delay before activating portals
+    yield return new WaitForSeconds(delay);
+
+    while(true)
     {
-        // Wait for delay before activating portals
-        yield return new WaitForSeconds(delay);
-
-        while (true)
+        if (canSpawnPortals && portals[0] == null)
         {
-            if (canSpawnPortals && portals[0] == null && portals[1] == null)
-            {
-                // to prevent immediate respawning
-                canSpawnPortals = false;
+            Vector2 portalPosition = GetValidPortalPosition();
 
-                Vector2 portal1Position = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
-                Vector2 portal2Position = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
+            // Instantiate portal
+            portals[0] = Instantiate(doubleGoalPrefab, portalPosition, Quaternion.identity);
 
+            // Add collider to the portal
+            portals[0].AddComponent<BoxCollider2D>();
 
-                while (Vector2.Distance(portal1Position, portal2Position) < 4f)
-                {
-                    portal2Position = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
+            // Set layer collision to ignore collisions between ball and power-ups
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ball"), LayerMask.NameToLayer("PowerUps"));
 
-                }
+            // Prevent immediate respawning
+            canSpawnPortals = false;
 
-                // Instantiate portals
-                portals[0] = Instantiate(doubleGoalPrefab, portal1Position, Quaternion.identity);
-                portals[1] = Instantiate(doubleGoalPrefab, portal2Position, Quaternion.identity);
-
-                // Add colliders to the portals
-                portals[0].AddComponent<BoxCollider2D>();
-                portals[1].AddComponent<BoxCollider2D>();
-
-                // Set layer collision to ignore collisions between ball and power-ups
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ball"), LayerMask.NameToLayer("PowerUps"));
-
-                StartCoroutine(ResetPortalSpawn());
-
-            }
-
-            // Delay before checking if portals can be spawned again
-            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(ResetPortalSpawn());
         }
+
+        // Delay before checking if portal can be spawned again
+        yield return new WaitForSeconds(0.5f);
     }
+}
+
+Vector2 GetValidPortalPosition()
+{
+    Vector2 portalPosition;
+    do
+    {
+        portalPosition = new Vector2(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y));
+    }
+    while (Vector2.Distance(portalPosition, player.transform.position) < 2f || Vector2.Distance(portalPosition, enemy.transform.position) < 2f);
+    
+    return portalPosition;
+}
 
     IEnumerator ResetPortalSpawn()
     {
