@@ -56,7 +56,7 @@ public class AICarHandler : MonoBehaviour
             Vector2 chaseDirection = (oppositeSide - ballPosition);
 
             // Apply input based on the chase direction
-            Vector2 inputVector = (carPosition-ballPosition);
+            Vector2 inputVector = new Vector2(ballPosition.y-carPosition.y,ballPosition.x-carPosition.x);
             Debug.Log(inputVector);
             // Apply input to the car controller
             topDownCarController.SetInputVector(inputVector);
