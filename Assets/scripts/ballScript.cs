@@ -9,6 +9,8 @@ public class ballScript : MonoBehaviour
     public Rigidbody2D myRigidBody;
     public LogicScript logic;
     private bool isResetting = false;
+    public bool isdoublep = false;
+    public bool isdoublee = false;
     public Color blinkColor; // Color to blink the background
     private Camera mainCamera; // Reference to the main camera
 
@@ -27,17 +29,54 @@ public class ballScript : MonoBehaviour
         {
             StartCoroutine(ResetPositionsAfterDelay(2f));
             StartCoroutine(BlinkBackground(2f, 0.2f)); // Start blinking background
-            if (myRigidBody.position.x < -11.5)
+            if (myRigidBody.position.x < -13)
             {
-                logic.addEnemyScore();
+                if(isdoublep)
+                {
+                    logic.addPowerUpEnemyScore();
+                }
+                else
+                {
+                    logic.addEnemyScore();
+                }
             }
             if (myRigidBody.position.x > 11.5)
             {
-                logic.addPlayerScore();              
+                if(isdoublee)
+                {
+                    logic.addPowerUpPlayerScore();
+                }
+                else
+                {
+                    logic.addPlayerScore();
+                }            
             }
         }
     }
 
+    public void changep()
+    {
+        if(isdoublep)
+        {
+            isdoublep = false;
+        }
+        else
+        {
+            isdoublep = true;
+        }
+    }
+
+    public void changee()
+    {
+        if(isdoublee)
+        {
+            isdoublee = false;
+        }
+        else
+        {
+            isdoublee = true;
+        }
+    }
     IEnumerator ResetPositionsAfterDelay(float delay)
     {
         isResetting = true;
@@ -70,12 +109,5 @@ public class ballScript : MonoBehaviour
             yield return new WaitForSeconds(interval);
             timer += interval * 2; // increment timer by the time for both intervals
         }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        /* Debug.Log("Collision detected with " + other.gameObject.name);
-        // ignore collision
-        Physics2D.IgnoreCollision(other, GetComponent<Collider2D>(), true);*/
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CarInputHandler : MonoBehaviour
 {
     TopDownCarController topDownCarController;
+    ballScript ball;
     Vector3 originalSize;
     public bool collisionTrigger = false;
 
@@ -22,6 +23,7 @@ public class CarInputHandler : MonoBehaviour
     void Awake()
     {
         topDownCarController = GetComponent<TopDownCarController>();
+        ball = GameObject.FindGameObjectWithTag("Ball").GetComponent<ballScript>();
     }
     // Start is called before the first frame update
     void Start()
@@ -68,15 +70,7 @@ public class CarInputHandler : MonoBehaviour
         }
         else if (collider.name == "doublePoint(Clone)")
         {
-            logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
-            if(gameObject.tag == "Player")
-            {
-                logic.addPowerUpPlayerScore();
-            }
-            else if(gameObject.tag == "Enemy")
-            {
-                logic.addPowerUpEnemyScore();
-            }
+            StartCoroutine(DoubleScore());
         }
 
     }
@@ -107,8 +101,19 @@ public class CarInputHandler : MonoBehaviour
         }      
     }
 
-    IEnumerator Magnet()
-    {
-        yield return new WaitForSeconds(10);
+    IEnumerator DoubleScore(){
+        if(playerCar.tag == "Player")
+        {
+            ball.changep();
+            yield return new WaitForSeconds(10);
+            ball.changee();
+        }
+        else
+        {
+            ball.changee();
+            yield return new WaitForSeconds(10);
+            ball.changee();
+        }
+
     }
 }
