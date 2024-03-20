@@ -10,6 +10,7 @@ public class CarInputHandler : MonoBehaviour
 
     public LogicScript logic;
     public CarInputHandler playerCar;
+    public GameObject blocker;
     public enum ControlType
     {
         WASD,
@@ -61,17 +62,9 @@ public class CarInputHandler : MonoBehaviour
             StartCoroutine(GrowthAndBack());
         }
 
-        else if (collider.name == "loosePoint(Clone)")
+        else if (collider.name == "truck(Clone)")
         {
-            logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
-            if(gameObject.tag == "Player")
-            {
-                logic.loosePlayerPoint();
-            }
-            else if(gameObject.tag == "Enemy")
-            {
-                logic.looseEnemyPoint();
-            }
+            StartCoroutine(BlockGoal());
         }
         else if (collider.name == "doublePoint(Clone)")
         {
@@ -96,5 +89,26 @@ public class CarInputHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(10);
         transform.localScale = originalSize;
+    }
+
+    IEnumerator BlockGoal()
+    {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Truck"), LayerMask.NameToLayer("Field"));
+        while(blocker.transform. position.y < -2)
+        {
+            blocker.transform.position = new Vector3(blocker.transform.position.x, blocker.transform.position.y + 0.1f, blocker.transform.position.z);
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return new WaitForSeconds(8);
+        while (blocker.transform.position.y > -11)
+        {
+            blocker.transform.position = new Vector3(blocker.transform.position.x, blocker.transform.position.y - 0.1f, blocker.transform.position.z);
+            yield return new WaitForSeconds(0.02f);
+        }      
+    }
+
+    IEnumerator Magnet()
+    {
+        yield return new WaitForSeconds(10);
     }
 }

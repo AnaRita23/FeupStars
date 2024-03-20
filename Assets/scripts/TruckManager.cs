@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoosePointManager : MonoBehaviour
+public class TruckManager : MonoBehaviour
 {
     public GameObject loosePointPrefab;
     public Vector2 spawnRangeX = new Vector2(-10f, 10f);
