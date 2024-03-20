@@ -11,11 +11,18 @@ public class LogicScript : MonoBehaviour
     public Text playerText;
     public Text enemyText;
 
+    void Start()
+    {
+        PlayerPrefs.SetInt("Player1Score", playerScore);
+        PlayerPrefs.SetInt("Player2Score", enemyScore);
+    }
+
     [ContextMenu("Increase P Score")]
     public void addPlayerScore()
     {
         playerScore += 1;
         playerText.text = playerScore.ToString();
+        PlayerPrefs.SetInt("Player1Score", playerScore);
     }
 
     [ContextMenu("Increase E Score")]
@@ -23,12 +30,15 @@ public class LogicScript : MonoBehaviour
     {
         enemyScore += 1;
         enemyText.text = enemyScore.ToString();
+        PlayerPrefs.SetInt("Player2Score", enemyScore);
+
     }
 
     public void addPowerUpPlayerScore()
     {
         playerScore += 2;
         playerText.text = playerScore.ToString();
+        PlayerPrefs.SetInt("Player1Score", playerScore);
     }
 
     [ContextMenu("Increase E Score")]
@@ -36,6 +46,7 @@ public class LogicScript : MonoBehaviour
     {
         enemyScore += 2;
         enemyText.text = enemyScore.ToString();
+        PlayerPrefs.SetInt("Player2Score", enemyScore);
     }
 
     public void loosePlayerPoint()
@@ -45,6 +56,7 @@ public class LogicScript : MonoBehaviour
             playerScore -= 1;
         }
         playerText.text = playerScore.ToString();
+        PlayerPrefs.SetInt("Player1Score", playerScore);
     }
 
     public void looseEnemyPoint()
@@ -54,5 +66,6 @@ public class LogicScript : MonoBehaviour
             enemyScore -= 1;
         }
         enemyText.text = enemyScore.ToString();
+        PlayerPrefs.SetInt("Player2Score", enemyScore);
     }
 }
