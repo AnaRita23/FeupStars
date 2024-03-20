@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarInputHandler : MonoBehaviour
 {
     TopDownCarController topDownCarController;
     ballScript ball;
     Vector3 originalSize;
+    public Image grow;
+    public Image doublePoint;
+    public Image block;
     public bool collisionTrigger = false;
 
     public LogicScript logic;
@@ -62,15 +66,17 @@ public class CarInputHandler : MonoBehaviour
         if (collider.name == "growthPotion(Clone)")
         {
             StartCoroutine(GrowthAndBack());
+            StartCoroutine(ActivatePowerupUI(grow, grow.sprite));
         }
-
         else if (collider.name == "truck(Clone)")
         {
             StartCoroutine(BlockGoal());
+            StartCoroutine(ActivatePowerupUI(block, block.sprite));
         }
         else if (collider.name == "doublePoint(Clone)")
         {
             StartCoroutine(DoubleScore());
+            StartCoroutine(ActivatePowerupUI(doublePoint, doublePoint.sprite));
         }
 
     }
@@ -114,6 +120,28 @@ public class CarInputHandler : MonoBehaviour
             yield return new WaitForSeconds(10);
             ball.changee();
         }
-
     }
+
+    IEnumerator ActivatePowerupUI(Image image, Sprite icon)
+    {
+        image.sprite = icon; // Set the powerup icon
+        image.gameObject.SetActive(true); // Activate the UI element
+
+        float timer = 0f;
+        while (timer < 10)
+        {
+            // Toggle the visibility of the image every 0.5 seconds
+            image.gameObject.SetActive(!image.gameObject.activeSelf);
+
+            // Wait for a short interval
+            yield return new WaitForSeconds(0.5f);
+
+            // Increment the timer
+            timer += 0.5f;
+        }
+
+        // Ensure the image is deactivated after blinking
+        image.gameObject.SetActive(false);
+    }
+   
 }
