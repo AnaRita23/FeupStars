@@ -5,6 +5,14 @@ using UnityEngine.UI;
 
 public class AICarHandler : MonoBehaviour
 {
+    public AudioClip truckSound;
+    public AudioClip growthSound;
+    public AudioClip doublePointSound;
+
+    public AudioSource growthSource;
+    public AudioSource doublePointSource;
+    public AudioSource truckSource;
+
     TopDownCarController topDownCarController;
     ballScript ball;
     Vector3 originalSize;
@@ -16,6 +24,7 @@ public class AICarHandler : MonoBehaviour
     public LogicScript logic;
     public CarInputHandler playerCar;
     public GameObject blocker;
+
     public enum ControlType
     {
         AI, // Add an AI control type
@@ -27,7 +36,13 @@ public class AICarHandler : MonoBehaviour
     {
         topDownCarController = GetComponent<TopDownCarController>();
         ball = GameObject.FindGameObjectWithTag("Ball").GetComponent<ballScript>();
+
+        // Find the AudioSource components for sound effects
+        growthSource = GameObject.Find("growthPotion").GetComponent<AudioSource>();
+        doublePointSource = GameObject.Find("doublePoint").GetComponent<AudioSource>();
+        truckSource = GameObject.Find("truck").GetComponent<AudioSource>();
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,16 +92,19 @@ public class AICarHandler : MonoBehaviour
 
         if (collider.name == "growthPotion(Clone)")
         {
+            growthSource.PlayOneShot(growthSound); // Play growth sound
             StartCoroutine(GrowthAndBack());
             StartCoroutine(ActivatePowerupUI(grow, grow.sprite));
         }
         else if (collider.name == "truck(Clone)")
         {
+            truckSource.PlayOneShot(truckSound); // Play truck sound
             StartCoroutine(BlockGoal());
             StartCoroutine(ActivatePowerupUI(block, block.sprite));
         }
         else if (collider.name == "doublePoint(Clone)")
         {
+            doublePointSource.PlayOneShot(doublePointSound); // Play double point sound
             StartCoroutine(DoubleScore());
             StartCoroutine(ActivatePowerupUI(doublePoint, doublePoint.sprite));
         }
@@ -155,3 +173,4 @@ public class AICarHandler : MonoBehaviour
         image.gameObject.SetActive(false);
     }
 }
+

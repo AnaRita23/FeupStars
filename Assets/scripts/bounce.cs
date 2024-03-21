@@ -5,9 +5,12 @@ using UnityEngine;
 public class bounce : MonoBehaviour
 {
     public float bounceForce = 10f;
+    public AudioClip bounceSound;
+    public AudioSource audioSource;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        audioSource.PlayOneShot(bounceSound);
         // Check if the colliding object has a Rigidbody
         Rigidbody2D rb = collision.collider.GetComponent<Rigidbody2D>();
         if (rb != null)

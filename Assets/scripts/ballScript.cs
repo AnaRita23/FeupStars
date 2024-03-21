@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ballScript : MonoBehaviour
 {
+    public AudioClip siu; // Assign this in the Inspector
+    public AudioSource audioSource;
     public TopDownCarController car1;
     public TopDownCarController car2;
     public Rigidbody2D myRigidBody;
@@ -14,10 +16,15 @@ public class ballScript : MonoBehaviour
     public Color blinkColor; // Color to blink the background
     private Camera mainCamera; // Reference to the main camera
 
+    void Awake()
+    {
+        audioSource = GameObject.Find("AudioManager").GetComponent<AudioSource>();
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
-        myRigidBody.position = new Vector2(0,Random.Range(-3f,3f));
+        myRigidBody.position = new Vector2(0, Random.Range(-3f, 3f));
         mainCamera = Camera.main; // Get the reference to the main camera
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
     }
@@ -31,7 +38,7 @@ public class ballScript : MonoBehaviour
             StartCoroutine(BlinkBackground(2f, 0.2f)); // Start blinking background
             if (myRigidBody.position.x < -13)
             {
-                if(isdoublep)
+                if (isdoublep)
                 {
                     logic.addPowerUpEnemyScore();
                 }
@@ -39,56 +46,43 @@ public class ballScript : MonoBehaviour
                 {
                     logic.addEnemyScore();
                 }
+                PlaySiuSound(); // Play SIU sound effect
             }
             if (myRigidBody.position.x > 11.5)
             {
-                if(isdoublee)
+                if (isdoublee)
                 {
                     logic.addPowerUpPlayerScore();
                 }
                 else
                 {
                     logic.addPlayerScore();
-                }            
+                }
+                PlaySiuSound(); // Play SIU sound effect
             }
         }
     }
 
     public void changep()
     {
-        if(isdoublep)
-        {
-            isdoublep = false;
-        }
-        else
-        {
-            isdoublep = true;
-        }
+        isdoublep = !isdoublep;
     }
 
     public void changee()
     {
-        if(isdoublee)
-        {
-            isdoublee = false;
-        }
-        else
-        {
-            isdoublee = true;
-        }
+        isdoublee = !isdoublee;
     }
+
     IEnumerator ResetPositionsAfterDelay(float delay)
     {
         isResetting = true;
         yield return new WaitForSeconds(delay);
 
-    
-        myRigidBody.position = new Vector2(0,Random.Range(-0.3f,0.3f));
+        myRigidBody.position = new Vector2(0, Random.Range(-0.3f, 0.3f));
         myRigidBody.velocity = Vector2.zero;
         myRigidBody.rotation = 0;
 
         car1.Reset();
-
         car2.Reset();
 
         isResetting = false;
@@ -109,5 +103,10 @@ public class ballScript : MonoBehaviour
             yield return new WaitForSeconds(interval);
             timer += interval * 2; // increment timer by the time for both intervals
         }
+    }
+
+    void PlaySiuSound()
+    {
+        audioSource.PlayOneShot(siu); // Play SIU sound effect
     }
 }
