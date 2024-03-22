@@ -4447,7 +4447,7 @@ GameObject:
   - component: {fileID: 831511143}
   - component: {fileID: 831511142}
   - component: {fileID: 831511145}
-  - component: {fileID: 831511146}
+  - component: {fileID: 831511147}
   m_Layer: 0
   m_Name: EnemyCar
   m_TagString: Enemy
@@ -4611,7 +4611,7 @@ MonoBehaviour:
   turnFactor: 3.5
   maxSpeed: 15
   rotationAngle: 0
---- !u!114 &831511146
+--- !u!114 &831511147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4620,7 +4620,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 831511139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79df25411db91e34983322d2adf7321c, type: 3}
+  m_Script: {fileID: 11500000, guid: 33c06415104ebc245b2f864fc3bb33e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   truckSound: {fileID: 8300000, guid: c566cc0d2ad383540b545bc7e42cf2c1, type: 3}
@@ -4629,14 +4629,14 @@ MonoBehaviour:
   growthSource: {fileID: 1437205095}
   doublePointSource: {fileID: 572842681}
   truckSource: {fileID: 1466517370}
-  grow: {fileID: 0}
-  doublePoint: {fileID: 0}
-  block: {fileID: 0}
+  grow: {fileID: 992240711}
+  doublePoint: {fileID: 488108350}
+  block: {fileID: 1560397463}
   collisionTrigger: 0
   logic: {fileID: 0}
-  playerCar: {fileID: 0}
-  blocker: {fileID: 0}
-  controlType: 0
+  playerCar: {fileID: 831511147}
+  blocker: {fileID: 1720622306}
+  controlType: 1
 --- !u!1 &867184046
 GameObject:
   m_ObjectHideFlags: 0
